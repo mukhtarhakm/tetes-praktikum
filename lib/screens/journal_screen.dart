@@ -144,14 +144,16 @@ class _JournalScreenState extends State<JournalScreen> {
         for (final brew in widget.controller.brews)
           brew.plan.beanId: brew.plan.beanName,
       };
-      return ListView(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpace.xl,
-          AppSpace.lg,
-          AppSpace.xl,
-          AppSpace.xl,
-        ),
-        children: [
+      return ColoredBox(
+        color: Colors.transparent,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpace.xl,
+            AppSpace.lg,
+            AppSpace.xl,
+            AppSpace.xl,
+          ),
+          children: [
           AppPageHeader(
             title: 'Jurnal',
             subtitle: '${widget.controller.brews.length} seduhan tercatat',
@@ -280,7 +282,8 @@ class _JournalScreenState extends State<JournalScreen> {
               ),
             ),
           ],
-        ],
+          ],
+        ),
       );
     },
   );
