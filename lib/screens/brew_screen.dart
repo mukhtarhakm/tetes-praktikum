@@ -557,6 +557,12 @@ class _BrewSetupScreenState extends State<BrewSetupScreen> {
             ),
             const SizedBox(height: AppSpace.md),
             OutlinedButton.icon(
+              // kalo mau ganti warna Minta saran AI
+              // style: OutlinedButton.styleFrom(
+              //   backgroundColor: Colors.red.shade50,
+              //   foregroundColor: Colors.red,
+              //   side: const BorderSide(color: Colors.red),
+              // ),
               onPressed: aiBusy ? null : askAi,
               icon: aiBusy
                   ? const SizedBox.square(

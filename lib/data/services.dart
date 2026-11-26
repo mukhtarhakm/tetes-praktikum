@@ -14,6 +14,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'currencies.dart';
 import 'models.dart';
 
+// Kurs mata uang: ambil dan validasi nilai tukar dari Frankfurter.
 class FxQuote {
   const FxQuote(this.currency, this.rate, this.date, {this.cached = false});
   final String currency;
@@ -61,6 +62,7 @@ class FxService {
   }
 }
 
+// Tempat kopi: data lokasi, hasil pencarian, dan pengurutan berdasarkan jarak.
 class StorePlace {
   const StorePlace(
     this.name,
@@ -174,6 +176,7 @@ class StoreService {
   }
 }
 
+// Rute jalan: minta dan validasi rute berkendara dari OSRM.
 class StoreRoute {
   const StoreRoute(this.distanceM, this.durationS, this.points);
   final double distanceM;
@@ -276,6 +279,7 @@ class RouteService {
 
 enum ReminderRepeat { once, daily, weekly }
 
+// Pengingat seduh: jadwal lokal sekali, harian, atau mingguan.
 class BrewReminder {
   const BrewReminder(this.when, this.repeat);
 
@@ -384,6 +388,7 @@ class NotificationService {
   }
 }
 
+// AI: bentuk hasil rekomendasi dan validasi data yang dikirim server.
 class AiRecommendation {
   const AiRecommendation({
     required this.doseG,
@@ -478,6 +483,7 @@ class AiRecommendation {
   }
 }
 
+// AI: target rasa dan nilai resep yang ingin dipertahankan pengguna.
 class AiPreferences {
   const AiPreferences({
     this.goal = '',
@@ -504,6 +510,7 @@ class AiPreferences {
   };
 }
 
+// AI: kirim permintaan rekomendasi dan diagnosa ke Supabase Function.
 class AiService {
   AiService(this.client);
   final SupabaseClient client;
