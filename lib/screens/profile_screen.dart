@@ -236,6 +236,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     builder: (context, _) => ListView(
       padding: const EdgeInsets.all(AppSpace.xl),
       children: [
+        // TAMPILAN PROFIL: foto, email, dan jumlah data akun.
         AppCard(
           color: AppColors.oliveSoft,
           child: Column(
@@ -330,9 +331,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         const SizedBox(height: AppSpace.section),
+        // TAMPILAN PROFIL: jadwal pengingat seduh.
         Text('Pengingat seduh', style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: AppSpace.md),
         AppCard(
+          color: Colors.white,
           child: InkWell(
             onTap: busy ? null : pickReminder,
             child: Row(
@@ -380,6 +383,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
         const SizedBox(height: AppSpace.section),
+        // TAMPILAN PROFIL: aksi keluar dari akun.
         const Divider(height: 1),
         ListTile(
           contentPadding: EdgeInsets.zero,

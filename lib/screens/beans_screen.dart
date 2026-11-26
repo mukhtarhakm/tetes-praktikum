@@ -7,6 +7,7 @@ import '../data/models.dart';
 import 'brew_screen.dart';
 import 'explore_screen.dart';
 
+// LAYAR: daftar dan pencarian beans.
 class BeansScreen extends StatefulWidget {
   const BeansScreen({super.key, required this.controller});
   final AppController controller;
@@ -29,6 +30,8 @@ class _BeansScreenState extends State<BeansScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    // seluruhnya
+    // backgroundColor: Colors.red.shade50,
     body: AnimatedBuilder(
       animation: widget.controller,
       builder: (context, _) {
@@ -61,6 +64,7 @@ class _BeansScreenState extends State<BeansScreen> {
                 ),
               ),
             ),
+            // TAMPILAN: pencarian beans.
             TextField(
               onChanged: (value) => setState(() => search = value),
               decoration: const InputDecoration(
@@ -69,6 +73,7 @@ class _BeansScreenState extends State<BeansScreen> {
               ),
             ),
             const SizedBox(height: AppSpace.xxl),
+            // TAMPILAN: pesan kosong atau daftar beans.
             if (beans.isEmpty)
               AppStateView(
                 icon: Icons.grain_rounded,
@@ -146,6 +151,7 @@ class _BeansScreenState extends State<BeansScreen> {
   );
 }
 
+// LAYAR: detail satu beans, termasuk aksi seduh, ubah, dan hapus.
 class BeanDetailScreen extends StatelessWidget {
   const BeanDetailScreen({
     super.key,
@@ -249,6 +255,7 @@ class BeanDetailScreen extends StatelessWidget {
             AppSpace.section,
           ),
           children: [
+            // TAMPILAN: identitas beans dan stok.
             Text(
               bean.name,
               style: AppTheme.coffeeName,
@@ -276,6 +283,7 @@ class BeanDetailScreen extends StatelessWidget {
             const SizedBox(height: AppSpace.xxl),
             const Divider(),
             const SizedBox(height: AppSpace.lg),
+            // TAMPILAN: aksi seduh dengan beans ini.
             AppButton(
               label: 'Seduh dengan beans ini',
               icon: Icons.play_arrow_rounded,
@@ -292,6 +300,7 @@ class BeanDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: AppSpace.section),
             const Divider(),
+            // TAMPILAN: profil dan proses beans.
             Row(
               children: [
                 Expanded(child: Text('PROFIL BEANS', style: sectionStyle)),
@@ -322,6 +331,7 @@ class BeanDetailScreen extends StatelessWidget {
             const SizedBox(height: AppSpace.xxl),
             const Divider(),
             const SizedBox(height: AppSpace.lg),
+            // TAMPILAN: tag dan catatan rasa.
             Text('RASA', style: sectionStyle),
             const SizedBox(height: AppSpace.md),
             if (bean.tastingTags.isNotEmpty)
@@ -351,6 +361,7 @@ class BeanDetailScreen extends StatelessWidget {
             const SizedBox(height: AppSpace.xxl),
             const Divider(),
             const SizedBox(height: AppSpace.lg),
+            // TAMPILAN: harga dan detail pembelian.
             Text('PEMBELIAN', style: sectionStyle),
             const SizedBox(height: AppSpace.md),
             if (bean.packSizeG != null)
@@ -410,6 +421,7 @@ class BeanDetailScreen extends StatelessWidget {
   );
 }
 
+// LAYAR: formulir untuk menambah atau mengubah beans.
 class BeanFormScreen extends StatefulWidget {
   const BeanFormScreen({super.key, required this.controller, this.bean});
   final AppController controller;
@@ -587,6 +599,7 @@ class _BeanFormScreenState extends State<BeanFormScreen> {
     body: ListView(
       padding: const EdgeInsets.all(AppSpace.xl),
       children: [
+        // TAMPILAN FORM: identitas dan profil biji.
         AppCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -644,6 +657,7 @@ class _BeanFormScreenState extends State<BeanFormScreen> {
           ),
         ),
         const SizedBox(height: AppSpace.lg),
+        // TAMPILAN FORM: proses dan tingkat sangrai.
         AppCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -691,6 +705,7 @@ class _BeanFormScreenState extends State<BeanFormScreen> {
           ),
         ),
         const SizedBox(height: AppSpace.lg),
+        // TAMPILAN FORM: kemasan, harga, dan stok.
         AppCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -749,6 +764,7 @@ class _BeanFormScreenState extends State<BeanFormScreen> {
           ),
         ),
         const SizedBox(height: AppSpace.lg),
+        // TAMPILAN FORM: pilihan tag dan catatan rasa.
         AppCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -793,6 +809,7 @@ class _BeanFormScreenState extends State<BeanFormScreen> {
           ),
         ),
         const SizedBox(height: AppSpace.xxl),
+        // TAMPILAN FORM: simpan data beans.
         AppButton(
           label: 'Simpan biji',
           icon: Icons.save_rounded,

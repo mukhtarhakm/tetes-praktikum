@@ -8,6 +8,7 @@ import '../app/app_theme.dart';
 import '../app/app_ui.dart';
 import '../data/services.dart';
 
+// LAYAR: cek dan konversi kurs mata uang.
 class FxScreen extends StatefulWidget {
   const FxScreen({
     super.key,
@@ -85,6 +86,7 @@ class _FxScreenState extends State<FxScreen> {
     body: ListView(
       padding: const EdgeInsets.all(AppSpace.xl),
       children: [
+        // TAMPILAN KURS: pengantar dan input harga/mata uang.
         Text('Konversi harga beans', style: AppTheme.pageTitle),
         const SizedBox(height: AppSpace.sm),
         Text(
@@ -136,7 +138,9 @@ class _FxScreenState extends State<FxScreen> {
           ],
         ),
         const SizedBox(height: AppSpace.xxl),
+        // TAMPILAN KURS: aksi konversi dan hasilnya.
         AppButton(label: 'Cek kurs terbaru', onPressed: convert, busy: loading),
+        // TAMPILAN KURS: pesan error jika kurs gagal diambil.
         if (error != null) ...[
           const SizedBox(height: AppSpace.xxl),
           Text(
@@ -147,6 +151,7 @@ class _FxScreenState extends State<FxScreen> {
           ),
           TextButton(onPressed: convert, child: const Text('Coba lagi')),
         ],
+        // TAMPILAN KURS: hasil konversi dan tanggal kurs.
         if (quote != null) ...[
           const SizedBox(height: AppSpace.section),
           const Divider(),
@@ -240,6 +245,7 @@ String _date(String iso) {
   return '${date.day} ${months[date.month - 1]} ${date.year}';
 }
 
+// LAYAR: peta dan daftar roastery serta toko alat kopi.
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key, required this.controller});
   final AppController controller;
@@ -442,6 +448,7 @@ class _StoreScreenState extends State<StoreScreen> {
         return LayoutBuilder(
           builder: (context, size) => Stack(
             children: [
+              // TAMPILAN PETA: tile peta, garis rute, dan pin lokasi.
               FlutterMap(
                 key: ObjectKey(result),
                 mapController: mapController,
@@ -506,6 +513,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   ),
                 ],
               ),
+              // TAMPILAN PETA: bar atas dan tombol muat ulang.
               Positioned(
                 top: MediaQuery.paddingOf(context).top + AppSpace.sm,
                 left: AppSpace.xl,
@@ -568,6 +576,7 @@ class _StoreScreenState extends State<StoreScreen> {
                   ),
                 ),
               ),
+              // TAMPILAN PETA: panel tempat terpilih dan daftar toko.
               DraggableScrollableSheet(
                 controller: sheetController,
                 initialChildSize: 0.38,
