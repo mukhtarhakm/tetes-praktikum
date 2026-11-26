@@ -73,7 +73,6 @@ class _AuthScreenState extends State<AuthScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // TAMPILAN: identitas dan pengantar aplikasi.
                 const CircleAvatar(
                   radius: 32,
                   backgroundColor: AppColors.ink,
@@ -93,7 +92,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   ).textTheme.bodyLarge?.copyWith(color: AppColors.muted),
                 ),
                 const SizedBox(height: AppSpace.section),
-                // TAMPILAN: form masuk atau daftar akun.
                 AppCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

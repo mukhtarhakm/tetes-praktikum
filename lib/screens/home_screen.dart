@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    // TAMPILAN: isi tab aktif.
     body: SafeArea(
       child: IndexedStack(
         index: tab,
@@ -54,7 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     ),
-    // TAMPILAN: navigasi tab di bagian bawah.
     bottomNavigationBar: NavigationBar(
       selectedIndex: tab,
       backgroundColor: AppColors.background,
@@ -85,7 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 }
 
-// BAGIAN TAB: isi Beranda.
 class _Dashboard extends StatefulWidget {
   const _Dashboard({
     required this.controller,
@@ -186,7 +183,6 @@ class _DashboardState extends State<_Dashboard> {
           AppSpace.section,
         ),
         children: [
-          // TAMPILAN: header dan pintasan profil.
           Row(
             children: [
               Text('tetes.', style: AppTheme.wordmark),
@@ -204,7 +200,6 @@ class _DashboardState extends State<_Dashboard> {
           ),
           const Divider(height: AppSpace.section),
           const SizedBox(height: AppSpace.section),
-          // TAMPILAN: beans pilihan dan informasi stok.
           Text(
             bean == null ? 'MULAI DARI SINI' : 'UNTUK SEDUH BERIKUTNYA',
             style: Theme.of(
@@ -253,7 +248,6 @@ class _DashboardState extends State<_Dashboard> {
               ).textTheme.bodyLarge?.copyWith(color: AppColors.muted),
             ),
           const SizedBox(height: AppSpace.section),
-          // TAMPILAN: aksi tambah beans atau mulai seduh.
           AppButton(
             label: bean == null ? 'Tambah beans' : 'Mulai seduh',
             icon: Icons.arrow_forward_rounded,
@@ -271,7 +265,6 @@ class _DashboardState extends State<_Dashboard> {
           ),
           const SizedBox(height: AppSpace.section),
           const SizedBox(height: AppSpace.section),
-          // TAMPILAN: ringkasan seduhan terakhir.
           const Divider(),
           const SizedBox(height: AppSpace.lg),
           Text(
@@ -328,7 +321,6 @@ class _DashboardState extends State<_Dashboard> {
   );
 }
 
-// BAGIAN TAB: isi Lainnya.
 class _MoreScreen extends StatelessWidget {
   const _MoreScreen({
     required this.controller,
@@ -384,9 +376,7 @@ class _MoreScreen extends StatelessWidget {
           AppSpace.xl,
         ),
         children: [
-          // TAMPILAN: judul dan pintasan akun.
           const AppPageHeader(title: 'Lainnya', subtitle: 'Akun dan peralatan'),
-          // TAMPILAN: kartu profil pengguna.
           AppListRow(
             onTap: openProfile,
             child: Row(
@@ -421,7 +411,6 @@ class _MoreScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpace.section),
-          // TAMPILAN: daftar alat dan layanan.
           Text(
             'PERALATAN',
             style: Theme.of(context).textTheme.labelLarge?.copyWith(

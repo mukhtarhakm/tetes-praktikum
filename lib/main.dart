@@ -35,7 +35,7 @@ class _TetesAppState extends State<TetesApp> {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    title: 'tetes.',
+    title: 'Tetes Praktikum',
     debugShowCheckedModeBanner: false,
     theme: AppTheme.light,
     home: AnimatedBuilder(

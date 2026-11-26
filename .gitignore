@@ -45,6 +45,3 @@ app.*.map.json
 /android/app/release
 /config/app.json
 /supabase/.env.ai
-
-# Catatan persiapan challenge khusus di komputer ini
-/PERSIAPAN_CHALLENGE.md

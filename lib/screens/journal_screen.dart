@@ -6,7 +6,6 @@ import '../app/app_ui.dart';
 import '../data/models.dart';
 import 'brew_screen.dart';
 
-// LAYAR: daftar, pencarian, dan filter riwayat seduhan.
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key, required this.controller});
   final AppController controller;
@@ -145,154 +144,148 @@ class _JournalScreenState extends State<JournalScreen> {
         for (final brew in widget.controller.brews)
           brew.plan.beanId: brew.plan.beanName,
       };
-      return ColoredBox(
-        color: Colors.transparent,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpace.xl,
-            AppSpace.lg,
-            AppSpace.xl,
-            AppSpace.xl,
+      return ListView(
+        padding: const EdgeInsets.fromLTRB(
+          AppSpace.xl,
+          AppSpace.lg,
+          AppSpace.xl,
+          AppSpace.xl,
+        ),
+        children: [
+          AppPageHeader(
+            title: 'Jurnal',
+            subtitle: '${widget.controller.brews.length} seduhan tercatat',
           ),
-          children: [
-            // TAMPILAN JURNAL: judul, pencarian, dan filter.
-            AppPageHeader(
-              title: 'Jurnal',
-              subtitle: '${widget.controller.brews.length} seduhan tercatat',
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    onChanged: (value) => setState(() => search = value),
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.search_rounded),
-                      hintText: 'Cari beans atau catatan',
-                    ),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  onChanged: (value) => setState(() => search = value),
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search_rounded),
+                    hintText: 'Cari beans atau catatan',
                   ),
                 ),
-                const SizedBox(width: AppSpace.sm),
-                Badge(
-                  isLabelVisible: beanFilter != null || ratingFilter != null,
-                  child: IconButton.filledTonal(
-                    tooltip: 'Saring jurnal',
-                    onPressed: showFilters,
-                    icon: const Icon(Icons.tune_rounded),
+              ),
+              const SizedBox(width: AppSpace.sm),
+              Badge(
+                isLabelVisible: beanFilter != null || ratingFilter != null,
+                child: IconButton.filledTonal(
+                  tooltip: 'Saring jurnal',
+                  onPressed: showFilters,
+                  icon: const Icon(Icons.tune_rounded),
+                ),
+              ),
+            ],
+          ),
+          if (beanFilter != null || ratingFilter != null) ...[
+            const SizedBox(height: AppSpace.sm),
+            Wrap(
+              spacing: AppSpace.sm,
+              runSpacing: AppSpace.xs,
+              children: [
+                if (beanFilter != null)
+                  InputChip(
+                    label: Text(
+                      beanNames[beanFilter] ?? 'Beans tidak tersedia',
+                    ),
+                    onDeleted: () => setState(() => beanFilter = null),
                   ),
+                if (ratingFilter != null)
+                  InputChip(
+                    label: Text('$ratingFilter ★'),
+                    onDeleted: () => setState(() => ratingFilter = null),
+                  ),
+                TextButton(
+                  onPressed: () => setState(() {
+                    beanFilter = null;
+                    ratingFilter = null;
+                  }),
+                  child: const Text('Reset'),
                 ),
               ],
             ),
-            if (beanFilter != null || ratingFilter != null) ...[
-              const SizedBox(height: AppSpace.sm),
-              Wrap(
-                spacing: AppSpace.sm,
-                runSpacing: AppSpace.xs,
-                children: [
-                  if (beanFilter != null)
-                    InputChip(
-                      label: Text(
-                        beanNames[beanFilter] ?? 'Beans tidak tersedia',
-                      ),
-                      onDeleted: () => setState(() => beanFilter = null),
-                    ),
-                  if (ratingFilter != null)
-                    InputChip(
-                      label: Text('$ratingFilter ★'),
-                      onDeleted: () => setState(() => ratingFilter = null),
-                    ),
-                  TextButton(
-                    onPressed: () => setState(() {
-                      beanFilter = null;
-                      ratingFilter = null;
-                    }),
-                    child: const Text('Reset'),
+          ],
+          Text(
+            '${entries.length} seduhan',
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: AppColors.muted),
+          ),
+          const SizedBox(height: AppSpace.xxl),
+          if (entries.isEmpty)
+            AppStateView(
+              icon: Icons.menu_book_rounded,
+              message: widget.controller.brews.isEmpty
+                  ? 'Belum ada seduhan tersimpan.'
+                  : 'Seduhan tidak ditemukan.',
+            ),
+          for (var i = 0; i < entries.length; i++) ...[
+            if (i == 0 ||
+                !DateUtils.isSameDay(
+                  entries[i].brewedAt.toLocal(),
+                  entries[i - 1].brewedAt.toLocal(),
+                )) ...[
+              Text(
+                _dateHeading(entries[i].brewedAt),
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: AppColors.muted,
+                  letterSpacing: 1.2,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: AppSpace.md),
+            ],
+            AppListRow(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => BrewDetailScreen(
+                    controller: widget.controller,
+                    brewId: entries[i].id,
                   ),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          entries[i].plan.beanName,
+                          style: Theme.of(context).textTheme.titleLarge,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: AppSpace.xs),
+                        Text(
+                          '${entries[i].plan.doseG.toStringAsFixed(0)} g · 1:${entries[i].plan.ratio.toStringAsFixed(1)}',
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: AppColors.muted),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: AppSpace.sm),
+                  Icon(Icons.star_rounded, size: 18, color: AppColors.olive),
+                  Text(
+                    ' ${entries[i].score}/5',
+                    style: Theme.of(
+                      context,
+                    ).textTheme.labelLarge?.copyWith(color: AppColors.olive),
+                  ),
+                  const SizedBox(width: AppSpace.sm),
+                  const Icon(Icons.chevron_right_rounded),
                 ],
               ),
-            ],
-            Text(
-              '${entries.length} seduhan',
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: AppColors.muted),
             ),
-            const SizedBox(height: AppSpace.xxl),
-            // TAMPILAN JURNAL: daftar seduhan dikelompokkan berdasarkan tanggal.
-            if (entries.isEmpty)
-              AppStateView(
-                icon: Icons.menu_book_rounded,
-                message: widget.controller.brews.isEmpty
-                    ? 'Belum ada seduhan tersimpan.'
-                    : 'Seduhan tidak ditemukan.',
-              ),
-            for (var i = 0; i < entries.length; i++) ...[
-              if (i == 0 ||
-                  !DateUtils.isSameDay(
-                    entries[i].brewedAt.toLocal(),
-                    entries[i - 1].brewedAt.toLocal(),
-                  )) ...[
-                Text(
-                  _dateHeading(entries[i].brewedAt),
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: AppColors.muted,
-                    letterSpacing: 1.2,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: AppSpace.md),
-              ],
-              AppListRow(
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (_) => BrewDetailScreen(
-                      controller: widget.controller,
-                      brewId: entries[i].id,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            entries[i].plan.beanName,
-                            style: Theme.of(context).textTheme.titleLarge,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: AppSpace.xs),
-                          Text(
-                            '${entries[i].plan.doseG.toStringAsFixed(0)} g · 1:${entries[i].plan.ratio.toStringAsFixed(1)}',
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(color: AppColors.muted),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: AppSpace.sm),
-                    Icon(Icons.star_rounded, size: 18, color: AppColors.olive),
-                    Text(
-                      ' ${entries[i].score}/5',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.labelLarge?.copyWith(color: AppColors.olive),
-                    ),
-                    const SizedBox(width: AppSpace.sm),
-                    const Icon(Icons.chevron_right_rounded),
-                  ],
-                ),
-              ),
-            ],
           ],
-        ),
+        ],
       );
     },
   );
 }
 
-// Helper untuk memformat tanggal dan waktu yang ditampilkan di jurnal.
 String _dateHeading(DateTime value) {
   const months = [
     'JANUARI',
@@ -320,7 +313,6 @@ String _date(DateTime value) {
 String _clock(int seconds) =>
     '${(seconds ~/ 60).toString().padLeft(2, '0')}:${(seconds % 60).toString().padLeft(2, '0')}';
 
-// LAYAR: detail resep, hasil, pengukuran, dan diagnosa satu seduhan.
 class BrewDetailScreen extends StatefulWidget {
   const BrewDetailScreen({
     super.key,
@@ -424,7 +416,6 @@ class _BrewDetailScreenState extends State<BrewDetailScreen> {
             AppSpace.section,
           ),
           children: [
-            // TAMPILAN DETAIL: nama beans, tanggal, dan skor.
             Text(
               brew.plan.beanName,
               style: AppTheme.coffeeName,
@@ -454,7 +445,6 @@ class _BrewDetailScreenState extends State<BrewDetailScreen> {
             const SizedBox(height: AppSpace.xxl),
             const Divider(),
             const SizedBox(height: AppSpace.lg),
-            // TAMPILAN DETAIL: resep dan aksi untuk menyeduh ulang.
             Text('RESEP', style: sectionStyle),
             const SizedBox(height: AppSpace.md),
             detailRow('Dosis', '${brew.plan.doseG.toStringAsFixed(1)} g'),
@@ -497,7 +487,6 @@ class _BrewDetailScreenState extends State<BrewDetailScreen> {
             const SizedBox(height: AppSpace.xxl),
             const Divider(),
             const SizedBox(height: AppSpace.lg),
-            // TAMPILAN DETAIL: rasa, catatan, dan hasil pengukuran.
             Text('HASIL SEDUH', style: sectionStyle),
             const SizedBox(height: AppSpace.md),
             if (flavorTags.isNotEmpty) ...[
@@ -548,7 +537,6 @@ class _BrewDetailScreenState extends State<BrewDetailScreen> {
                   context,
                 ).textTheme.bodyLarge?.copyWith(color: AppColors.muted),
               ),
-            // TAMPILAN DETAIL: diagnosa AI jika tersedia.
             if (brew.aiDiagnosis?.text.isNotEmpty == true) ...[
               const SizedBox(height: AppSpace.xxl),
               const Divider(),

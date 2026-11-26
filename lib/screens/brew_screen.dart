@@ -14,7 +14,6 @@ import '../data/services.dart';
 import 'beans_screen.dart';
 import 'journal_screen.dart';
 
-// LAYAR: atur resep dan urutan tuang sebelum mulai seduh.
 class BrewSetupScreen extends StatefulWidget {
   const BrewSetupScreen({
     super.key,
@@ -531,10 +530,8 @@ class _BrewSetupScreenState extends State<BrewSetupScreen> {
             AppSpace.section,
           ),
           children: [
-            // TAMPILAN ATUR SEDUH: judul halaman.
             Text('Rencana seduhmu', style: AppTheme.pageTitle),
             const SizedBox(height: AppSpace.xxl),
-            // TAMPILAN ATUR SEDUH: pilih beans untuk resep ini.
             DropdownButtonFormField<String>(
               key: ValueKey(selectedBean?.id),
               initialValue: selectedBean?.id,
@@ -559,7 +556,6 @@ class _BrewSetupScreenState extends State<BrewSetupScreen> {
               }),
             ),
             const SizedBox(height: AppSpace.md),
-            // TAMPILAN ATUR SEDUH: tombol permintaan saran AI.
             OutlinedButton.icon(
               // kalo mau ganti warna Minta saran AI
               // style: OutlinedButton.styleFrom(
@@ -599,7 +595,6 @@ class _BrewSetupScreenState extends State<BrewSetupScreen> {
               ),
             ],
             const SizedBox(height: AppSpace.xxl),
-            // TAMPILAN ATUR SEDUH: dosis dan rasio.
             Row(
               children: [
                 Expanded(
@@ -656,7 +651,6 @@ class _BrewSetupScreenState extends State<BrewSetupScreen> {
             const SizedBox(height: AppSpace.xxl),
             const Divider(),
             const SizedBox(height: AppSpace.lg),
-            // TAMPILAN ATUR SEDUH: hasil hitung total air.
             Text(
               'TOTAL AIR',
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -673,7 +667,6 @@ class _BrewSetupScreenState extends State<BrewSetupScreen> {
             const SizedBox(height: AppSpace.lg),
             const Divider(),
             const SizedBox(height: AppSpace.xxl),
-            // TAMPILAN ATUR SEDUH: jumlah tuangan dan urutan tahap.
             Row(
               children: [
                 Expanded(
@@ -729,7 +722,6 @@ class _BrewSetupScreenState extends State<BrewSetupScreen> {
             ] else
               const Text('Periksa pengaturan untuk melihat urutan tuang.'),
             const SizedBox(height: AppSpace.xxl),
-            // TAMPILAN ATUR SEDUH: mulai sesi timer.
             AppButton(
               label: 'Mulai seduh',
               icon: Icons.play_arrow_rounded,
@@ -753,7 +745,6 @@ class _BrewSetupScreenState extends State<BrewSetupScreen> {
   );
 }
 
-// LAYAR: jalankan timer dan panduan tuang selama sesi seduh.
 class BrewSessionScreen extends StatefulWidget {
   const BrewSessionScreen({
     super.key,
@@ -1010,7 +1001,6 @@ class _BrewSessionScreenState extends State<BrewSessionScreen>
               AppSpace.section,
             ),
             children: [
-              // TAMPILAN TIMER: ringkasan resep dan nama tahap aktif.
               Center(
                 child: Text(
                   '${widget.plan.doseG.toStringAsFixed(0)} g kopi · ${widget.plan.totalWaterG.toStringAsFixed(0)} g air',
@@ -1029,7 +1019,6 @@ class _BrewSessionScreenState extends State<BrewSessionScreen>
                 ),
               ),
               const SizedBox(height: AppSpace.xxl),
-              // TAMPILAN TIMER: lingkaran progres dan waktu.
               Center(
                 child: SizedBox.square(
                   dimension: ringSize,
@@ -1089,7 +1078,6 @@ class _BrewSessionScreenState extends State<BrewSessionScreen>
                 ),
               ),
               const SizedBox(height: AppSpace.xxl),
-              // TAMPILAN TIMER: aksi drawdown atau target tuangan.
               if (drawdown) ...[
                 Center(
                   child: Text(
@@ -1182,7 +1170,6 @@ class _BrewSessionScreenState extends State<BrewSessionScreen>
   }
 }
 
-// LAYAR: catat skor, rasa, dan hasil pengukuran seduhan.
 class BrewResultScreen extends StatefulWidget {
   const BrewResultScreen({
     super.key,
@@ -1320,7 +1307,6 @@ class _BrewResultScreenState extends State<BrewResultScreen> {
       body: ListView(
         padding: const EdgeInsets.all(AppSpace.xl),
         children: [
-          // TAMPILAN HASIL: ringkasan resep yang baru diseduh.
           AppCard(
             color: AppColors.oliveSoft,
             child: Column(
@@ -1344,7 +1330,6 @@ class _BrewResultScreenState extends State<BrewResultScreen> {
             ),
           ),
           const SizedBox(height: AppSpace.xxl),
-          // TAMPILAN HASIL: penilaian dan tag rasa.
           Text(
             'Gimana rasanya?',
             style: Theme.of(context).textTheme.titleLarge,
@@ -1400,7 +1385,6 @@ class _BrewResultScreenState extends State<BrewResultScreen> {
           if (bean != null && bean.tastingTags.isNotEmpty)
             Text('Kata roastery: ${bean.tastingTags.join(', ')}'),
           const SizedBox(height: AppSpace.lg),
-          // TAMPILAN HASIL: pengukuran air dan drawdown (opsional).
           AppCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1441,7 +1425,6 @@ class _BrewResultScreenState extends State<BrewResultScreen> {
             ),
           ),
           const SizedBox(height: AppSpace.lg),
-          // TAMPILAN HASIL: catatan rasa tambahan.
           TextField(
             controller: notes,
             maxLines: 3,
@@ -1452,7 +1435,6 @@ class _BrewResultScreenState extends State<BrewResultScreen> {
             ),
           ),
           const SizedBox(height: AppSpace.xxl),
-          // TAMPILAN HASIL: simpan ke jurnal.
           AppButton(
             label: 'Simpan ke jurnal',
             icon: Icons.save_rounded,
